@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Maestro - Segith</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    :root {
+      --dorado: #D4AF37;
+      --dorado-oscuro: #B8860B;
+      --negro: #000000;
+      --negro-suave: #111111;
+      --blanco: #FFFFFF;
+      --blanco-roto: #F5F5F5;
+      --gris: #333333;
+      --gris-claro: #888888;
+      --gris-oscuro: #1a1a1a;
+      --verde: #4CAF50;
+      --rojo: #f44336;
+    }
+    
+    body {
+      background: linear-gradient(135deg, var(--negro) 0%, var(--negro-suave) 100%);
+      min-height: 100vh;
+      color: var(--blanco);
+    }
+    
+    /* Header */
+    header {
+      background-color: var(--negro-suave);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--gris);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--dorado);
+      letter-spacing: 1.5px;
+    }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--dorado);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: var(--negro);
+    }
+    
+    /* Layout principal */
+    .container {
+      display: flex;
+      min-height: calc(100vh - 70px);
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: var(--negro);
+      border-right: 1px solid var(--gris);
+      padding: 2rem 0;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+    }
+    
+    .menu-item {
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--blanco-roto);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+      cursor: pointer;
+    }
+    
+    .menu-item:hover, .menu-item.active {
+      background: var(--gris-oscuro);
+      color: var(--dorado);
+      border-left-color: var(--dorado);
+    }
+    
+    .menu-item i {
+      width: 20px;
+      text-align: center;
+    }
+    
+    /* Contenido principal */
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+    }
+    
+    .welcome-banner {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(184, 134, 11, 0.1) 100%);
+      border-radius: 10px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--gris);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .welcome-banner h1 {
+      color: var(--dorado);
+      margin-bottom: 0.5rem;
+    }
+    
+    .welcome-banner p {
+      color: var(--blanco-roto);
+      max-width: 600px;
+    }
+    
+    /* Secciones */
+    .section {
+      background: var(--negro-suave);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--gris);
+      display: none;
+    }
+    
+    .section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--gris);
+    }
+    
+    .section-title {
+      color: var(--dorado);
+      font-size: 1.3rem;
+    }
+    
+    /* Tablas */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--gris);
+    }
+    
+    th {
+      color: var(--dorado);
+      font-weight: 500;
+    }
+    
+    tr:hover {
+      background: var(--gris-oscuro);
+    }
+    
+    /* Botones */
+    .btn {
+      padding: 0.8rem 1.5rem;
+      background: var(--dorado);
+      color: var(--negro);
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+      background: var(--dorado-oscuro);
+    }
+    
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .btn-success {
+      background: var(--verde);
+      color: var(--blanco);
+    }
+    
+    .btn-danger {
+      background: var(--rojo);
+      color: var(--blanco);
+    }
+    
+    /* Badges */
+    .badge {
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .badge-success {
+      background: rgba(0, 200, 0, 0.2);
+      color: #6bff6b;
+    }
+    
+    .badge-warning {
+      background: rgba(212, 175, 55, 0.2);
+      color: var(--dorado);
+    }
+    
+    .badge-danger {
+      background: rgba(255, 0, 0, 0.2);
+      color: #ff6b6b;
+    }
+    
+    /* Formularios */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--blanco-roto);
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--gris);
+      border-radius: 6px;
+      background: var(--negro);
+      color: var(--blanco);
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--dorado);
+    }
+    
+    /* Responsive */
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--gris);
+        padding: 1rem 0;
+      }
+      
+      .sidebar-menu {
+        display: flex;
+        overflow-x: auto;
+      }
+      
+      .menu-item {
+        padding: 0.8rem 1.2rem;
+        white-space: nowrap;
+        border-left: none;
+        border-bottom: 4px solid transparent;
+      }
+      
+      .menu-item:hover, .menu-item.active {
+        border-left-color: transparent;
+        border-bottom-color: var(--dorado);
+      }
+    }
+    
+    @media (max-width: 600px) {
+      header {
+        padding: 1rem;
+      }
+      
+      .main-content {
+        padding: 1rem;
+      }
+      
+      .user-info {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">SEGITH</div>
+    <div class="user-info">
+      <span id="userName">Maestro</span>
+      <div class="user-avatar" id="userAvatar">M</div>
+      <button class="btn" id="logoutBtn">Cerrar Sesión</button>
+    </div>
+  </header>
+  
+  <div class="container">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <ul class="sidebar-menu">
+        <li><a class="menu-item active" data-section="dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a class="menu-item" data-section="tareas"><i class="fas fa-tasks"></i> Tareas</a></li>
+        <li><a class="menu-item" data-section="estudiantes"><i class="fas fa-user-graduate"></i> Estudiantes</a></li>
+        <li><a class="menu-item" data-section="clases"><i class="fas fa-calendar-alt"></i> Clases</a></li>
+        <li><a class="menu-item" data-section="materiales"><i class="fas fa-book"></i> Materiales</a></li>
+        <li><a class="menu-item" data-section="configuracion"><i class="fas fa-cog"></i> Configuración</a></li>
+      </ul>
+    </nav>
+    
+    <!-- Contenido principal -->
+    <main class="main-content">
+      <!-- Banner de bienvenida -->
+      <div class="welcome-banner">
+        <h1 id="welcomeTitle">Bienvenido, Maestro</h1>
+        <p id="welcomeMessage">Panel de control para gestionar tus cursos, estudiantes y tareas.</p>
+      </div>
+      
+      <!-- Dashboard Principal -->
+      <div class="section active" id="dashboard-section">
+        <div class="section-header">
+          <h2 class="section-title">Resumen General</h2>
+        </div>
+        
+        <div class="stats-cards" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+          <div style="background: var(--negro); padding: 20px; border-radius: 8px; text-align: center; border-left: 4px solid var(--dorado);">
+            <h3 style="color: var(--gris-claro); margin-bottom: 10px; font-size: 14px;">Tareas Pendientes</h3>
+            <div style="font-size: 28px; font-weight: bold; color: var(--dorado);" id="tareasPendientes">5</div>
+          </div>
+          
+          <div style="background: var(--negro); padding: 20px; border-radius: 8px; text-align: center; border-left: 4px solid var(--dorado);">
+            <h3 style="color: var(--gris-claro); margin-bottom: 10px; font-size: 14px;">Total Estudiantes</h3>
+            <div style="font-size: 28px; font-weight: bold; color: var(--dorado);" id="totalEstudiantes">24</div>
+          </div>
+          
+          <div style="background: var(--negro); padding: 20px; border-radius: 8px; text-align: center; border-left: 4px solid var(--dorado);">
+            <h3 style="color: var(--gris-claro); margin-bottom: 10px; font-size: 14px;">Clases Esta Semana</h3>
+            <div style="font-size: 28px; font-weight: bold; color: var(--dorado);" id="clasesSemana">3</div>
+          </div>
+        </div>
+        
+        <div class="section-header">
+          <h2 class="section-title">Tareas Pendientes de Calificar</h2>
+        </div>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Estudiante</th>
+              <th>Tarea</th>
+              <th>Curso</th>
+              <th>Fecha de Entrega</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tareasTable">
+            <tr>
+              <td>Ana García López</td>
+              <td>Práctica de Colorimetría</td>
+              <td>Estética Facial</td>
+              <td>20/08/2023</td>
+              <td><button class="btn btn-sm">Calificar</button></td>
+            </tr>
+            <tr>
+              <td>María Rodríguez</td>
+              <td>Examen de Técnicas</td>
+              <td>Cosmetología</td>
+              <td>19/08/2023</td>
+              <td><button class="btn btn-sm">Calificar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Gestión de Tareas -->
+      <div class="section" id="tareas-section">
+        <div class="section-header">
+          <h2 class="section-title">Gestión de Tareas</h2>
+          <button class="btn" id="crearTareaBtn">Crear Nueva Tarea</button>
+        </div>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Tarea</th>
+              <th>Curso</th>
+              <th>Fecha Límite</th>
+              <th>Entregas</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Práctica de Colorimetría</td>
+              <td>Estética Facial</td>
+              <td>25/08/2023</td>
+              <td>12/24</td>
+              <td>
+                <button class="btn btn-sm">Ver Entregas</button>
+                <button class="btn btn-sm btn-danger">Eliminar</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Examen de Técnicas</td>
+              <td>Cosmetología</td>
+              <td>30/08/2023</td>
+              <td>8/24</td>
+              <td>
+                <button class="btn btn-sm">Ver Entregas</button>
+                <button class="btn btn-sm btn-danger">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Gestión de Estudiantes -->
+      <div class="section" id="estudiantes-section">
+        <div class="section-header">
+          <h2 class="section-title">Mis Estudiantes</h2>
+        </div>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Curso</th>
+              <th>Asistencia</th>
+              <th>Promedio</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ana García López</td>
+              <td>ana.garcia@email.com</td>
+              <td>Estética Facial</td>
+              <td>92%</td>
+              <td>8.7</td>
+              <td><button class="btn btn-sm">Ver Detalles</button></td>
+            </tr>
+            <tr>
+              <td>María Rodríguez Santos</td>
+              <td>maria.rodriguez@email.com</td>
+              <td>Cosmetología</td>
+              <td>88%</td>
+              <td>9.2</td>
+              <td><button class="btn btn-sm">Ver Detalles</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Otras secciones (Clases, Materiales, Configuración) -->
+      <div class="section" id="clases-section">
+        <div class="section-header">
+          <h2 class="section-title">Gestión de Clases</h2>
+          <button class="btn">Programar Nueva Clase</button>
+        </div>
+        <p>Aquí puedes gestionar tu calendario de clases.</p>
+      </div>
+      
+      <div class="section" id="materiales-section">
+        <div class="section-header">
+          <h2 class="section-title">Materiales Didácticos</h2>
+          <button class="btn">Subir Material</button>
+        </div>
+        <p>Gestiona los materiales de estudio para tus cursos.</p>
+      </div>
+      
+      <div class="section" id="configuracion-section">
+        <div class="section-header">
+          <h2 class="section-title">Configuración de Cuenta</h2>
+        </div>
+        
+        <div class="form-group">
+          <label for="teacherName">Nombre Completo</label>
+          <input type="text" id="teacherName" value="Profesor Ejemplo">
+        </div>
+        
+        <div class="form-group">
+          <label for="teacherEmail">Correo Electrónico</label>
+          <input type="email" id="teacherEmail" value="profesor@segith.com">
+        </div>
+        
+        <div class="form-group">
+          <label for="teacherPassword">Nueva Contraseña (dejar en blanco para no cambiar)</label>
+          <input type="password" id="teacherPassword">
+        </div>
+        
+        <button class="btn">Guardar Cambios</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verificar autenticación del maestro
+      const isTeacherLoggedIn = sessionStorage.getItem('teacherLoggedIn');
+      const teacherName = sessionStorage.getItem('teacherName');
+      const teacherEmail = sessionStorage.getItem('teacherEmail');
+      
+      if (!isTeacherLoggedIn) {
+        alert('Debe iniciar sesión como maestro');
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      // Cargar información del maestro
+      if (teacherName) {
+        document.getElementById('userName').textContent = teacherName;
+        document.getElementById('userAvatar').textContent = teacherName.charAt(0).toUpperCase();
+        document.getElementById('welcomeTitle').textContent = `Bienvenido, ${teacherName}`;
+        document.getElementById('teacherName').value = teacherName;
+      }
+      
+      if (teacherEmail) {
+        document.getElementById('teacherEmail').value = teacherEmail;
+      }
+      
+      // Navegación del sidebar
+      const menuItems = document.querySelectorAll('.menu-item');
+      const sections = document.querySelectorAll('.section');
+      
+      menuItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const sectionId = this.getAttribute('data-section') + '-section';
+          
+          // Actualizar menú activo
+          menuItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Mostrar sección correspondiente
+          sections.forEach(section => {
+            section.classList.remove('active');
+          });
+          document.getElementById(sectionId).classList.add('active');
+        });
+      });
+      
+      // Cerrar sesión
+      document.getElementById('logoutBtn').addEventListener('click', function() {
+        // Limpiar sessionStorage
+        sessionStorage.removeItem('teacherLoggedIn');
+        sessionStorage.removeItem('teacherName');
+        sessionStorage.removeItem('teacherEmail');
+        
+        // Redirigir al login
+        window.location.href = 'login.html';
+      });
+      
+      // Simular carga de datos del maestro
+      function loadTeacherData() {
+        console.log('Cargando datos del maestro...');
+        // Aquí iría la llamada a la API para cargar datos reales
+      }
+      
+      // Cargar datos al iniciar
+      loadTeacherData();
+    });
+  </script>
+</body>
+<!-- Al final del body -->
+<script src="js/upload.js"></script>
+</html>
