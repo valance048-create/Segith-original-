@@ -1,17 +1,299 @@
-body {
-  font-family: Arial, sans-serif;
+/* Reset mejorado */
+*, *::before, *::after {
   margin: 0;
   padding: 0;
-  background: #f8f8f8;
+  box-sizing: border-box;
 }
+
+body, h1, h2, h3, p {
+  font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+  line-height: 1.6;
+}
+
+/* Variables de color para consistencia */
+:root {
+  --negro: #000000;
+  --negro-suave: #111111;
+  --blanco: #FFFFFF;
+  --blanco-roto: #F8F8F8;
+  --dorado: #D4AF37;
+  --dorado-oscuro: #B8860B;
+  --dorado-transparente: rgba(212, 175, 55, 0.1);
+}
+
+/* Fondo con textura sutil */
+body {
+  background-color: var(--negro);
+  color: var(--blanco-roto);
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 20%),
+    radial-gradient(circle at 85% 30%, rgba(212, 175, 55, 0.03) 0%, transparent 20%);
+}
+
+/* Encabezado minimalista con detalle dorado */
 header {
-  background: #d63384;
-  color: white;
-  padding: 1em;
+  background-color: var(--negro-suave);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2em 2.5em;
+  position: relative;
+  overflow: hidden;
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--dorado), transparent);
+}
+
+header .logo {
+  font-size: 1.6em;
+  font-weight: 700;
+  color: var(--blanco);
+  letter-spacing: 1.5px;
+  position: relative;
+  padding: 0.2em 0;
+}
+
+header .logo::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30%;
+  height: 2px;
+  background: var(--dorado);
+  transition: width 0.3s ease;
+}
+
+header .logo:hover::after {
+  width: 100%;
+}
+
+header nav a {
+  margin-left: 28px;
+  text-decoration: none;
+  color: var(--blanco);
+  font-weight: 400;
+  position: relative;
+  padding: 0.5em 0;
+  transition: color 0.3s ease;
+}
+
+header nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--dorado);
+  transition: width 0.3s ease;
+}
+
+header nav a:hover {
+  color: var(--dorado);
+}
+
+header nav a:hover::after {
+  width: 100%;
+}
+
+/* Hero section con efecto sutil */
+.hero {
+  text-align: center;
+  padding: 6em 2em;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(17,17,17,0.8) 100%),
+    url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d4af37' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  z-index: -1;
+}
+
+.hero h1 {
+  font-size: 3.2em;
+  margin-bottom: 0.5em;
+  color: var(--blanco);
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.hero h1 span {
+  color: var(--dorado);
+  font-weight: 500;
+  position: relative;
+}
+
+.hero h1 span::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--dorado), transparent);
+}
+
+.hero p {
+  font-size: 1.2em;
+  color: var(--blanco-roto);
+  max-width: 700px;
+  margin: 0 auto;
+  font-weight: 300;
+}
+
+/* Sección de servicios */
+.servicios {
+  padding: 5em 2em;
   text-align: center;
 }
-nav a {
-  margin: 0 10px;
-  color: white;
-  text-decoration: none;
+
+.servicios h2 {
+  font-size: 2.5em;
+  margin-bottom: 1.2em;
+  color: var(--blanco);
+  font-weight: 300;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.3em;
+}
+
+.servicios h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--dorado), transparent);
+}
+
+/* Grid de servicios mejorado */
+.grid-servicios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5em;
+  margin-top: 3em;
+}
+
+.card {
+  background-color: var(--negro-suave);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 2.5em 2em;
+  border-radius: 4px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 0;
+  background: var(--dorado);
+  transition: height 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(212, 175, 55, 0.3);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card:hover::before {
+  height: 100%;
+}
+
+.card h3 {
+  color: var(--blanco);
+  margin-bottom: 1em;
+  font-weight: 500;
+  position: relative;
+  display: inline-block;
+}
+
+.card h3::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 30px;
+  height: 1px;
+  background: var(--dorado);
+  transition: width 0.3s ease;
+}
+
+.card:hover h3::after {
+  width: 60px;
+}
+
+.card p {
+  color: #aaa;
+  font-weight: 300;
+}
+
+/* Footer elegante */
+footer {
+  text-align: center;
+  padding: 3em 2em;
+  background-color: var(--negro-suave);
+  position: relative;
+  color: #888;
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--dorado), transparent);
+}
+
+/* Efectos de enfoque y transiciones suaves */
+button, a, .card {
+  transition: all 0.3s ease;
+}
+
+/* Mejoras de responsividad */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    padding: 1.5em;
+  }
+  
+  header nav {
+    margin-top: 1.5em;
+  }
+  
+  header nav a {
+    margin: 0 0.8em;
+  }
+  
+  .hero h1 {
+    font-size: 2.5em;
+  }
+  
+  .grid-servicios {
+    grid-template-columns: 1fr;
+  }
 }
