@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Escuela de Belleza</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    :root {
+      --dorado: #D4AF37;
+      --dorado-oscuro: #B8860B;
+      --rosa: #FFC0CB;
+      --rosa-oscuro: #F8BBD0;
+      --negro: #000000;
+      --negro-suave: #111111;
+      --blanco: #FFFFFF;
+      --blanco-roto: #F5F5F5;
+      --gris: #333333;
+      --gris-claro: #888888;
+      --gris-oscuro: #1a1a1a;
+    }
+    
+    body {
+      background: linear-gradient(135deg, var(--negro) 0%, var(--negro-suave) 100%);
+      min-height: 100vh;
+      color: var(--blanco);
+    }
+    
+    /* Header */
+    header {
+      background-color: var(--negro-suave);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--gris);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--dorado);
+      letter-spacing: 1.5px;
+    }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--dorado);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: var(--negro);
+    }
+    
+    /* Layout principal */
+    .container {
+      display: flex;
+      min-height: calc(100vh - 70px);
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: var(--negro);
+      border-right: 1px solid var(--gris);
+      padding: 2rem 0;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+    }
+    
+    .menu-item {
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--blanco-roto);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+      cursor: pointer;
+    }
+    
+    .menu-item:hover, .menu-item.active {
+      background: var(--gris-oscuro);
+      color: var(--dorado);
+      border-left-color: var(--dorado);
+    }
+    
+    .menu-item i {
+      width: 20px;
+      text-align: center;
+    }
+    
+    /* Contenido principal */
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+    }
+    
+    .welcome-banner {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(184, 134, 11, 0.1) 100%);
+      border-radius: 10px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--gris);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .welcome-banner::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 100px;
+      height: 100px;
+      border: 2px solid var(--dorado);
+      border-radius: 50%;
+      opacity: 0.1;
+    }
+    
+    .welcome-banner h1 {
+      color: var(--dorado);
+      margin-bottom: 0.5rem;
+    }
+    
+    .welcome-banner p {
+      color: var(--blanco-roto);
+      max-width: 600px;
+    }
+    
+    /* Secciones */
+    .section {
+      background: var(--negro-suave);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--gris);
+      display: none;
+    }
+    
+    .section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--gris);
+    }
+    
+    .section-title {
+      color: var(--dorado);
+      font-size: 1.3rem;
+    }
+    
+    /* Tarjetas */
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .card {
+      background: var(--negro);
+      border-radius: 8px;
+      padding: 1.5rem;
+      border: 1px solid var(--gris);
+      transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+      border-color: var(--dorado);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card-title {
+      color: var(--blanco);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .card-title i {
+      color: var(--dorado);
+    }
+    
+    .card-content {
+      color: var(--blanco-roto);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      color: var(--gris-claro);
+      font-size: 0.8rem;
+    }
+    
+    /* Tablas */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--gris);
+    }
+    
+    th {
+      color: var(--dorado);
+      font-weight: 500;
+    }
+    
+    tr:hover {
+      background: var(--gris-oscuro);
+    }
+    
+    /* Formularios */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--blanco-roto);
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--gris);
+      border-radius: 6px;
+      background: var(--negro);
+      color: var(--blanco);
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--dorado);
+    }
+    
+    .btn {
+      padding: 0.8rem 1.5rem;
+      background: var(--dorado);
+      color: var(--negro);
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+      background: var(--dorado-oscuro);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--dorado);
+      color: var(--dorado);
+    }
+    
+    .btn-outline:hover {
+      background: var(--dorado);
+      color: var(--negro);
+    }
+    
+    /* Calificaciones */
+    .badge {
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .badge-success {
+      background: rgba(0, 200, 0, 0.2);
+      color: #6bff6b;
+    }
+    
+    .badge-warning {
+      background: rgba(212, 175, 55, 0.2);
+      color: var(--dorado);
+    }
+    
+    .badge-danger {
+      background: rgba(255, 0, 0, 0.2);
+      color: #ff6b6b;
+    }
+    
+    /* Upload box */
+    .upload-box {
+      border: 2px dashed var(--gris);
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .upload-box:hover {
+      border-color: var(--dorado);
+    }
+    
+    .upload-icon {
+      font-size: 2.5rem;
+      color: var(--gris-claro);
+      margin-bottom: 1rem;
+    }
+    
+    .upload-text {
+      color: var(--blanco-roto);
+      margin-bottom: 1rem;
+    }
+    
+    /* Responsive */
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--gris);
+        padding: 1rem 0;
+      }
+      
+      .sidebar-menu {
+        display: flex;
+        overflow-x: auto;
+      }
+      
+      .menu-item {
+        padding: 0.8rem 1.2rem;
+        white-space: nowrap;
+        border-left: none;
+        border-bottom: 4px solid transparent;
+      }
+      
+      .menu-item:hover, .menu-item.active {
+        border-left-color: transparent;
+        border-bottom-color: var(--dorado);
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .cards-container {
+        grid-template-columns: 1fr;
+      }
+      
+      header {
+        padding: 1rem;
+      }
+      
+      .main-content {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">BELLEZA</div>
+    <div class="user-info">
+      <span id="userName">Estudiante</span>
+      <div class="user-avatar" id="userAvatar">E</div>
+      <button class="btn" id="logoutBtn" style="padding: 0.5rem 1rem;">Cerrar Sesión</button>
+    </div>
+  </header>
+  
+  <div class="container">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <ul class="sidebar-menu">
+        <li><a class="menu-item active" data-section="dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a class="menu-item" data-section="materiales"><i class="fas fa-book"></i> Materiales</a></li>
+        <li><a class="menu-item" data-section="horarios"><i class="fas fa-clock"></i> Horarios</a></li>
+        <li><a class="menu-item" data-section="calificaciones"><i class="fas fa-chart-bar"></i> Calificaciones</a></li>
+        <li><a class="menu-item" data-section="tareas"><i class="fas fa-upload"></i> Subir Tareas</a></li>
+        <li><a class="menu-item" data-section="clases"><i class="fas fa-calendar"></i> Próximas Clases</a></li>
+        <li><a class="menu-item" data-section="configuracion"><i class="fas fa-cog"></i> Configuración</a></li>
+      </ul>
+    </nav>
+    
+    <!-- Contenido principal -->
+    <main class="main-content">
+      <!-- Banner de bienvenida -->
+      <div class="welcome-banner">
+        <h1 id="welcomeTitle">Bienvenida, Estudiante</h1>
+        <p>Estás al día con tus tareas. Tienes <strong>2 actividades pendientes</strong> para esta semana.</p>
+      </div>
+      
+      <!-- Dashboard Principal -->
+      <div class="section active" id="dashboard-section">
+        <div class="section-header">
+          <h2 class="section-title">Resumen General</h2>
+        </div>
+        
+        <div class="cards-container">
+          <div class="card">
+            <h3 class="card-title"><i class="fas fa-tasks"></i> Tareas Pendientes</h3>
+            <p class="card-content">Tienes 2 tareas por entregar esta semana.</p>
+            <div class="card-meta">
+              <span>Próxima entrega: 15/05/2023</span>
+            </div>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title"><i class="fas fa-chart-line"></i> Rendimiento Académico</h3>
+            <p class="card-content">Tu promedio actual es de 8.7 sobre 10.</p>
+            <div class="card-meta">
+              <span>Última actualización: Hoy</span>
+            </div>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title"><i class="fas fa-calendar-check"></i> Asistencia</h3>
+            <p class="card-content">Has asistido al 92% de tus clases este mes.</p>
+            <div class="card-meta">
+              <span>Registro mensual</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="section-header" style="margin-top: 2rem;">
+          <h2 class="section-title">Próximas Clases</h2>
+          <button class="btn btn-outline">Ver calendario completo</button>
+        </div>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Materia</th>
+              <th>Profesor</th>
+              <th>Salón</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>15/05/2023</td>
+              <td>9:00 - 11:00</td>
+              <td>Técnicas de Coloración</td>
+              <td>Dra. Martínez</td>
+              <td>Salón A-12</td>
+            </tr>
+            <tr>
+              <td>16/05/2023</td>
+              <td>11:00 - 13:00</td>
+              <td>Cortes de Vanguardia</td>
+              <td>Prof. Rodríguez</td>
+              <td>Salón B-07</td>
+            </tr>
+            <tr>
+              <td>17/05/2023</td>
+              <td>15:00 - 17:00</td>
+              <td>Tratamientos Faciales</td>
+              <td>Dra. López</td>
+              <td>Laboratorio 3</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Materiales de estudio -->
+      <div class="section" id="materiales-section">
+        <div class="section-header">
+          <h2 class="section-title">Materiales de Estudio</h2>
+          <button class="btn btn-outline">Ver todos</button>
+        </div>
+        
+        <div class="cards-container">
+          <div class="card">
+            <h3 class="card-title"><i class="fas fa-file-pdf"></i> Técnicas de Colorimetría</h3>
+            <p class="card-content">Guía completa sobre teoría del color y aplicación en tintes para el cabello.</p>
+            <div class="card-meta">
+              <span>Módulo: Coloración</span>
+              <span>12 MB</span>
+            </div>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title"><i class="fas fa-video"></i> Cortes de Temporada</h3>
+            <p class="card-content">Video tutorial con las técnicas de corte más demandadas esta temporada.</p>
+            <div class="card-meta">
+              <span>Módulo: Cortes</span>
+              <span>45 min</span>
+            </div>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title"><i class="fas fa-file-pdf"></i> Protocolos de Sanitización</h3>
+            <p class="card-content">Normativas actualizadas de higiene y sanitización de herramientas.</p>
+            <div class="card-meta">
+              <span>Módulo: Seguridad</span>
+              <span>8 MB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Horarios -->
+      <div class="section" id="horarios-section">
+        <div class="section-header">
+          <h2 class="section-title">Horarios de Clase</h2>
+          <button class="btn btn-outline">Calendario completo</button>
+        </div>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Lunes</th>
+              <th>Martes</th>
+              <th>Miércoles</th>
+              <th>Jueves</th>
+              <th>Viernes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>9:00 - 11:00</td>
+              <td>Coloración</td>
+              <td>-</td>
+              <td>Coloración</td>
+              <td>-</td>
+              <td>Práctica Supervisada</td>
+            </tr>
+            <tr>
+              <td>11:00 - 13:00</td>
+              <td>-</td>
+              <td>Cortes</td>
+              <td>-</td>
+              <td>Cortes</td>
+              <td>Práctica Supervisada</td>
+            </tr>
+            <tr>
+              <td>15:00 - 17:00</td>
+              <td>Tratamientos</td>
+              <td>-</td>
+              <td>Tratamientos</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Calificaciones -->
+      <div class="section" id="calificaciones-section">
+        <div class="section-header">
+          <h2 class="section-title">Calificaciones</h2>
+          <button class="btn btn-outline">Ver historial</button>
+        </div>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Módulo</th>
+              <th>Tarea</th>
+              <th>Calificación</th>
+              <th>Estado</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Coloración</td>
+              <td>Práctica de Mechas</td>
+              <td>9.2</td>
+              <td><span class="badge badge-success">Aprobado</span></td>
+              <td>12/05/2023</td>
+            </tr>
+            <tr>
+              <td>Cortes</td>
+              <td>Examen Técnico</td>
+              <td>8.5</td>
+              <td><span class="badge badge-success">Aprobado</span></td>
+              <td>05/05/2023</td>
+            </tr>
+            <tr>
+              <td>Tratamientos</td>
+              <td>Análisis Capilar</td>
+              <td>7.8</td>
+              <td><span class="badge badge-warning">En revisión</span></td>
+              <td>28/04/2023</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Subir archivos -->
+      <div class="section" id="tareas-section">
+        <div class="section-header">
+          <h2 class="section-title">Subir Tarea</h2>
+        </div>
+        
+        <div class="upload-box" id="uploadBox">
+          <div class="upload-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <p class="upload-text">Arrastra tu archivo aquí o haz clic para seleccionarlo</p>
+          <button class="btn" id="selectFileBtn">Seleccionar archivo</button>
+          <input type="file" id="fileInput" style="display: none;">
+        </div>
+        
+        <form id="uploadForm">
+          <div class="form-group">
+            <label for="assignment">Tarea</label>
+            <select id="assignment">
+              <option value="">Selecciona una tarea</option>
+              <option value="1">Práctica de Color - Módulo Coloración</option>
+              <option value="2">Técnica de Cortes - Módulo Cortes</option>
+              <option value="3">Análisis Capilar - Módulo Tratamientos</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="comments">Comentarios (opcional)</label>
+            <textarea id="comments" rows="3" placeholder="Agrega cualquier comentario sobre tu entrega..."></textarea>
+          </div>
+          
+          <button type="submit" class="btn">Enviar tarea</button>
+        </form>
+      </div>
+      
+      <!-- Próximas Clases -->
+      <div class="section" id="clases-section">
+        <div class="section-header">
+          <h2 class="section-title">Próximas Clases y Eventos</h2>
+        </div>
+        
+        <div class="cards-container">
+          <div class="card">
+            <h3 class="card-title"><i class="fas fa-cut"></i> Taller de Cortes Especiales</h3>
+            <p class="card-content">Aprende técnicas avanzadas de cortes para eventos especiales.</p>
+            <div class="card-meta">
+              <span>20/05/2023 · 10:00 hrs</span>
+            </div>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title"><i class="fas fa-palette"></i> Seminario de Tendencias en Color</h3>
+            <p class="card-content">Conoce las últimas tendencias en coloración para esta temporada.</p>
+            <div class="card-meta">
+              <span>25/05/2023 · 16:00 hrs</span>
+            </div>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title"><i class="fas fa-spa"></i> Workshop de Wellness Capilar</h3>
+            <p class="card-content">Técnicas de tratamientos regenerativos para el cabello.</p>
+            <div class="card-meta">
+              <span>30/05/2023 · 11:00 hrs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Configuración -->
+      <div class="section" id="configuracion-section">
+        <div class="section-header">
+          <h2 class="section-title">Configuración de Cuenta</h2>
+        </div>
+        
+        <form id="settingsForm">
+          <div class="form-group">
+            <label for="name">Nombre completo</label>
+            <input type="text" id="name" value="Ana García">
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" value="ana@ejemplo.com">
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">Teléfono</label>
+            <input type="tel" id="phone" value="+34 612 345 678">
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Nueva contraseña</label>
+            <input type="password" id="password" placeholder="Dejar en blanco para no cambiar">
+          </div>
+          
+          <div class="form-group">
+            <label for="confirmPassword">Confirmar nueva contraseña</label>
+            <input type="password" id="confirmPassword">
+          </div>
+          
+          <button type="submit" class="btn">Guardar cambios</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // VERIFICAR SI EL USUARIO HA INICIADO SESIÓN
+      const isLoggedIn = sessionStorage.getItem('studentLoggedIn');
+      const studentName = sessionStorage.getItem('studentName');
+      const studentEmail = sessionStorage.getItem('studentEmail');
+      const studentId = sessionStorage.getItem('studentId');
+      
+      if (!isLoggedIn) {
+        // Si no ha iniciado sesión, redirigir al login
+        alert('Por favor, inicia sesión primero');
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      // Mostrar información del estudiante
+      if (studentName) {
+        document.getElementById('userName').textContent = studentName;
+        document.getElementById('userAvatar').textContent = studentName.charAt(0).toUpperCase();
+        document.getElementById('welcomeTitle').textContent = `Bienvenida, ${studentName}`;
+        
+        // Llenar formulario de configuración
+        document.getElementById('name').value = studentName;
+        document.getElementById('email').value = studentEmail || '';
+      }
+      
+      // Navegación del sidebar
+      const menuItems = document.querySelectorAll('.menu-item');
+      const sections = document.querySelectorAll('.section');
+      
+      menuItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const sectionId = this.getAttribute('data-section') + '-section';
+          
+          // Actualizar menú activo
+          menuItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Mostrar sección correspondiente
+          sections.forEach(section => {
+            section.classList.remove('active');
+          });
+          document.getElementById(sectionId).classList.add('active');
+        });
+      });
+      
+      // Subida de archivos
+      const uploadBox = document.getElementById('uploadBox');
+      const fileInput = document.getElementById('fileInput');
+      const selectFileBtn = document.getElementById('selectFileBtn');
+      
+      selectFileBtn.addEventListener('click', function() {
+        fileInput.click();
+      });
+      
+      uploadBox.addEventListener('click', function() {
+        fileInput.click();
+      });
+      
+      fileInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+          const fileName = this.files[0].name;
+          uploadBox.querySelector('.upload-text').textContent = `Archivo seleccionado: ${fileName}`;
+          uploadBox.style.borderColor = 'var(--dorado)';
+        }
+      });
+      
+      // Formulario de subida
+      document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('¡Tarea enviada correctamente!');
+        this.reset();
+        uploadBox.querySelector('.upload-text').textContent = 'Arrastra tu archivo aquí o haz clic para seleccionarlo';
+        uploadBox.style.borderColor = 'var(--gris)';
+      });
+      
+      // Formulario de configuración
+      document.getElementById('settingsForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('¡Configuración guardada correctamente!');
+      });
+      
+      // Cerrar sesión
+      document.getElementById('logoutBtn').addEventListener('click', function() {
+        // Limpiar sessionStorage
+        sessionStorage.removeItem('studentLoggedIn');
+        sessionStorage.removeItem('studentName');
+        sessionStorage.removeItem('studentEmail');
+        sessionStorage.removeItem('studentId');
+        
+        // Redirigir al login
+        window.location.href = 'login.html';
+      });
+      
+      // Efecto de arrastrar para subir archivos
+      uploadBox.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.style.borderColor = 'var(--dorado)';
+        this.style.backgroundColor = 'var(--gris-oscuro)';
+      });
+      
+      uploadBox.addEventListener('dragleave', function() {
+        this.style.borderColor = 'var(--gris)';
+        this.style.backgroundColor = 'transparent';
+      });
+      
+      uploadBox.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.style.borderColor = 'var(--dorado)';
+        this.style.backgroundColor = 'transparent';
+        
+        if (e.dataTransfer.files.length) {
+          fileInput.files = e.dataTransfer.files;
+          const fileName = e.dataTransfer.files[0].name;
+          uploadBox.querySelector('.upload-text').textContent = `Archivo seleccionado: ${fileName}`;
+        }
+      });
+    });
+  </script>
+</body>
+<!-- Al final del body -->
+<script src="js/upload.js"></script>
+</html>
