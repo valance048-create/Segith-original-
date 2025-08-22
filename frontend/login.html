@@ -3,17 +3,535 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Segith</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>Login - Segith School </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    :root {
+      --dorado: #D4AF37;
+      --dorado-oscuro: #B8860B;
+      --rosa: #FFC0CB;
+      --rosa-oscuro: #F8BBD0;
+      --negro: #000000;
+      --negro-suave: #111111;
+      --blanco: #FFFFFF;
+      --blanco-roto: #F5F5F5;
+      --gris: #333333;
+      --gris-claro: #888888;
+    }
+    
+    body {
+      background: linear-gradient(135deg, var(--negro) 0%, var(--negro-suave) 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: var(--blanco);
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      background: var(--negro-suave);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--gris);
+    }
+    
+    .brand-section {
+      flex: 1;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(184, 134, 11, 0.1) 100%);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    
+    .brand-section::before {
+      content: '';
+      position: absolute;
+      top: -70px;
+      right: -70px;
+      width: 200px;
+      height: 200px;
+      border: 2px solid var(--dorado);
+      border-radius: 50%;
+      opacity: 0.2;
+    }
+    
+    .brand-section::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: -30px;
+      width: 120px;
+      height: 120px;
+      border: 2px solid var(--dorado);
+      border-radius: 50%;
+      opacity: 0.2;
+    }
+    
+    .logo {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--dorado);
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+    
+    .brand-text {
+      color: var(--blanco-roto);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 300px;
+      margin-bottom: 30px;
+    }
+    
+    .features {
+      text-align: left;
+      width: 100%;
+      max-width: 300px;
+    }
+    
+    .feature {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      color: var(--blanco-roto);
+      font-size: 0.9rem;
+    }
+    
+    .feature i {
+      color: var(--dorado);
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+    
+    .form-section {
+      flex: 1.2;
+      padding: 40px;
+      background: var(--negro);
+    }
+    
+    .form-toggle {
+      display: flex;
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--gris);
+    }
+    
+    .toggle-btn {
+      padding: 12px 20px;
+      background: none;
+      border: none;
+      color: var(--gris-claro);
+      font-size: 1.1rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .toggle-btn.active {
+      color: var(--dorado);
+      font-weight: 500;
+    }
+    
+    .toggle-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--dorado);
+    }
+    
+    .form-container {
+      position: relative;
+    }
+    
+    .form {
+      display: none;
+    }
+    
+    .form.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    h2 {
+      text-align: center;
+      color: var(--dorado);
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+      font-weight: 500;
+    }
+    
+    .input-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--blanco-roto);
+      font-size: 0.9rem;
+    }
+    
+    input {
+      width: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--gris);
+      border-radius: 6px;
+      background: var(--negro-suave);
+      color: var(--blanco);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: var(--dorado);
+      box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+    }
+    
+    .password-toggle {
+      position: absolute;
+      right: 15px;
+      top: 40px;
+      color: var(--gris-claro);
+      cursor: pointer;
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--dorado);
+      color: var(--negro);
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    
+    .btn:hover {
+      background: var(--dorado-oscuro);
+      transform: translateY(-2px);
+    }
+    
+    .message {
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      text-align: center;
+      display: none;
+    }
+    
+    .error {
+      background: rgba(255, 0, 0, 0.1);
+      border: 1px solid rgba(255, 0, 0, 0.2);
+      color: #ff6b6b;
+    }
+    
+    .success {
+      background: rgba(0, 255, 0, 0.1);
+      border: 1px solid rgba(0, 255, 0, 0.2);
+      color: #6bff6b;
+    }
+    
+    .admin-access {
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(212, 175, 55, 0.05);
+      border-radius: 8px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    
+    .admin-access p {
+      margin-bottom: 15px;
+      color: var(--blanco-roto);
+    }
+    
+    .admin-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .admin-btn {
+      padding: 8px 15px;
+      background: transparent;
+      color: var(--dorado);
+      border: 1px solid var(--dorado);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .admin-btn:hover {
+      background: rgba(212, 175, 55, 0.1);
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        max-width: 450px;
+      }
+      
+      .brand-section {
+        padding: 30px 20px;
+      }
+      
+      .form-section {
+        padding: 30px 25px;
+      }
+      
+      .admin-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h2>Ingreso a Segith</h2>
-  <form>
-    <label>Email:</label>
-    <input type="email" required><br>
-    <label>Contraseña:</label>
-    <input type="password" required><br>
-    <button type="submit">Ingresar</button>
-  </form>
+  <div class="container">
+    <div class="brand-section">
+      <div class="logo">Segith</div>
+      <p class="brand-text">Escuela de Estética y Cosmetología</p>
+      
+      <div class="features">
+        <div class="feature"><i class="fas fa-graduation-cap"></i><span>Acceso a materiales de estudio</span></div>
+        <div class="feature"><i class="fas fa-calendar-alt"></i><span>Consulta tu horario de clases</span></div>
+        <div class="feature"><i class="fas fa-clipboard-list"></i><span>Revisa tus calificaciones</span></div>
+        <div class="feature"><i class="fas fa-tools"></i><span>Gestiona tus prácticas</span></div>
+      </div>
+    </div>
+    
+    <div class="form-section">
+      <div class="form-toggle">
+        <button class="toggle-btn active" id="loginToggle">Iniciar Sesión</button>
+        <button class="toggle-btn" id="registerToggle">Registrarse</button>
+      </div>
+      
+      <div class="form-container">
+        <div id="loginMessage" class="message"></div>
+        
+        <!-- Login -->
+        <form id="loginForm" class="form active">
+          <h2>Acceso a la Plataforma</h2>
+          
+          <div class="input-group">
+            <label for="loginIdentifier">Correo o Código Único</label>
+            <input type="text" id="loginIdentifier" required>
+          </div>
+          
+          <div class="input-group">
+            <label for="loginPassword">Contraseña</label>
+            <input type="password" id="loginPassword" required>
+            <i class="fas fa-eye password-toggle" id="loginPasswordToggle"></i>
+          </div>
+          
+          <button type="submit" class="btn">Ingresar</button>
+          
+          <div class="admin-access">
+            <p>Acceso rápido para administradores:</p>
+            <div class="admin-buttons">
+              <button type="button" class="admin-btn" id="admin1Btn">Admin 1</button>
+              <button type="button" class="admin-btn" id="admin2Btn">Admin 2</button>
+            </div>
+          </div>
+        </form>
+        
+        <!-- Registro -->
+        <form id="registerForm" class="form">
+          <h2>Registro de Estudiante</h2>
+          <div id="registerMessage" class="message"></div>
+          
+          <div class="input-group">
+            <label for="registerName">Nombre completo</label>
+            <input type="text" id="registerName" required>
+          </div>
+          
+          <div class="input-group">
+            <label for="registerEmail">Email</label>
+            <input type="email" id="registerEmail" required>
+          </div>
+          
+          <div class="input-group">
+            <label for="registerPassword">Contraseña</label>
+            <input type="password" id="registerPassword" required>
+            <i class="fas fa-eye password-toggle" id="registerPasswordToggle"></i>
+          </div>
+          
+          <div class="input-group">
+            <label for="registerConfirmPassword">Confirmar contraseña</label>
+            <input type="password" id="registerConfirmPassword" required>
+          </div>
+          
+          <div class="input-group">
+            <label for="studentCode">Código de estudiante (si ya te fue asignado)</label>
+            <input type="text" id="studentCode">
+          </div>
+          
+          <button type="submit" class="btn">Registrarse</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const loginToggle = document.getElementById('loginToggle');
+  const registerToggle = document.getElementById('registerToggle');
+  const loginForm = document.getElementById('loginForm');
+  const registerForm = document.getElementById('registerForm');
+  const loginMessage = document.getElementById('loginMessage');
+  const loginPasswordToggle = document.getElementById('loginPasswordToggle');
+  const registerPasswordToggle = document.getElementById('registerPasswordToggle');
+  const admin1Btn = document.getElementById('admin1Btn');
+  const admin2Btn = document.getElementById('admin2Btn');
+
+  // Usuarios predefinidos - CORREGIDOS
+  const users = [
+    // Estudiantes
+    { identifier: 'alumno@segith.com', password: 'Alumno123', role: 'student', name: 'Estudiante Segith' },
+    { identifier: 'EST-123', password: 'Alumno123', role: 'student', name: 'Estudiante Segith (código)' },
+    
+    // Maestros
+    { identifier: 'maestro@segith.com', password: 'Maestro123', role: 'teacher', name: 'Profesor Segith' },
+    { identifier: 'DOC-001', password: 'Maestro123', role: 'teacher', name: 'Profesor Segith (código)' },
+    
+    // Administradores - AGREGADOS LOS QUE FALTABAN
+    { identifier: 'admin1@segith.com', password: 'Admin123', role: 'admin', name: 'Administrador Segith' },
+    { identifier: 'ADM-001', password: 'Admin123', role: 'admin', name: 'Administrador Segith (código)' },
+    { identifier: 'admin1@belleza.edu', password: 'Admin123#', role: 'admin', name: 'Administrador 1' },
+    { identifier: 'admin2@belleza.edu', password: 'Secure456$', role: 'admin', name: 'Administrador 2' }
+  ];
+
+  // Toggle formularios
+  loginToggle.addEventListener('click', () => {
+    loginToggle.classList.add('active');
+    registerToggle.classList.remove('active');
+    loginForm.classList.add('active');
+    registerForm.classList.remove('active');
+    loginMessage.style.display = 'none';
+  });
+  
+  registerToggle.addEventListener('click', () => {
+    registerToggle.classList.add('active');
+    loginToggle.classList.remove('active');
+    registerForm.classList.add('active');
+    loginForm.classList.remove('active');
+    loginMessage.style.display = 'none';
+  });
+
+  // Mostrar/ocultar contraseña
+  function setupPasswordToggle(toggleEl, inputId) {
+    toggleEl.addEventListener('click', () => {
+      const input = document.getElementById(inputId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        toggleEl.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        input.type = 'password';
+        toggleEl.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    });
+  }
+  setupPasswordToggle(loginPasswordToggle, 'loginPassword');
+  setupPasswordToggle(registerPasswordToggle, 'registerPassword');
+
+  // Botones de acceso rápido para administradores
+  admin1Btn.addEventListener('click', () => {
+    document.getElementById('loginIdentifier').value = 'admin1@belleza.edu';
+    document.getElementById('loginPassword').value = 'Admin123#';
+    showMessage(loginMessage, 'Credenciales de Admin 1 cargadas. Haz clic en Ingresar.', 'success');
+  });
+
+  admin2Btn.addEventListener('click', () => {
+    document.getElementById('loginIdentifier').value = 'admin2@belleza.edu';
+    document.getElementById('loginPassword').value = 'Secure456$';
+    showMessage(loginMessage, 'Credenciales de Admin 2 cargadas. Haz clic en Ingresar.', 'success');
+  });
+
+  // LOGIN
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const identifier = document.getElementById('loginIdentifier').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+
+    // Depuración: mostrar en consola lo que se está intentando
+    console.log('Intento de login:', identifier, password);
+    
+    const foundUser = users.find(u => u.identifier === identifier && u.password === password);
+
+    if (foundUser) {
+      showMessage(loginMessage, `¡Bienvenido/a ${foundUser.name}! Redirigiendo...`, 'success');
+      sessionStorage.clear();
+
+      // Redirigir según el rol
+      setTimeout(() => {
+        if (foundUser.role === 'student') {
+          sessionStorage.setItem('studentLoggedIn', 'true');
+          sessionStorage.setItem('studentName', foundUser.name);
+          sessionStorage.setItem('studentEmail', foundUser.identifier.includes('@') ? foundUser.identifier : '');
+          window.location.href = 'dashboard-estudiante.html';
+        } else if (foundUser.role === 'teacher') {
+          sessionStorage.setItem('teacherLoggedIn', 'true');
+          sessionStorage.setItem('teacherName', foundUser.name);
+          window.location.href = 'dashboard-maestro.html';
+        } else if (foundUser.role === 'admin') {
+          sessionStorage.setItem('adminLoggedIn', 'true');
+          sessionStorage.setItem('adminName', foundUser.name);
+          window.location.href = 'dashboard-admin.html';
+        }
+      }, 1500);
+    } else {
+      showMessage(loginMessage, 'Credenciales incorrectas. Verifica tu usuario y contraseña.', 'error');
+    }
+  });
+
+  // REGISTRO (simulado)
+  registerForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    showMessage(registerMessage, 'Registro simulado con éxito. En una implementación real, esto guardaría en la base de datos.', 'success');
+  });
+
+  function showMessage(element, text, type) {
+    element.textContent = text;
+    element.className = 'message ' + type;
+    element.style.display = 'block';
+    
+    // Ocultar mensaje después de 5 segundos
+    if (type === 'success') {
+      setTimeout(() => {
+        element.style.display = 'none';
+      }, 5000);
+    }
+  }
+});
+</script>
 </body>
 </html>
