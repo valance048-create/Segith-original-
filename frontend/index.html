@@ -3,20 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Segith - Academia de Belleza</title>
+  <title>Segith School & Spa</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <!-- Encabezado -->
   <header>
-    <h1>Bienvenida a Segith</h1>
+    <div class="logo">SEGITH</div>
     <nav>
+      <a href="index.html">Inicio</a>
       <a href="login.html">Ingresar</a>
-      <a href="notas.html">Notas</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#reservas">Reservar</a>
+      <a href="#contacto">Contacto</a>
     </nav>
   </header>
-  <main>
-    <h2>Formación en Belleza Profesional</h2>
-    <p>En Segith ofrecemos cursos prácticos de maquillaje, peinado y estética.</p>
-  </main>
+
+  <!-- Hero principal -->
+  <section class="hero">
+    <!-- 📌 Aquí va una IMAGEN DE FONDO (spa elegante o estética) -->
+    <h1>School & Spa Segith</h1>
+    <p>Descubre la experiencia del lujo en belleza y bienestar</p>
+    <a href="#reservas" class="btn">Reservar Cita</a>
+  </section>
+
+  <!-- Catálogo de servicios -->
+  <section class="servicios" id="servicios">
+    <h2>Nuestros Servicios</h2>
+    <div class="grid-servicios">
+      <div class="card">
+        <!-- 📌 Imagen para micropigmentación facial -->
+        <img src="img/micropigmentacion.jpg" alt="Micropigmentación Facial">
+        <h3>Micropigmentación Facial</h3>
+        <p>Resalta tu belleza natural con técnicas avanzadas en cejas y labios.</p>
+      </div>
+      <div class="card">
+        <!-- 📌 Imagen plasma rico en plaquetas -->
+        <img src="img/plasma.jpg" alt="Plasma Rico en Plaquetas">
+        <h3>Plasma Rico en Plaquetas</h3>
+        <p>Rejuvenecimiento facial y capilar con terapias de vanguardia.</p>
+      </div>
+      <div class="card">
+        <!-- 📌 Imagen depilación láser -->
+        <img src="img/laser.jpg" alt="Depilación Láser">
+        <h3>Depilación Láser</h3>
+        <p>Resultados duraderos y piel suave con tecnología láser de última generación.</p>
+      </div>
+      <div class="card">
+        <!-- 📌 Imagen diseño de cejas y pestañas -->
+        <img src="img/cejas.jpg" alt="Diseño de Cejas y Pestañas">
+        <h3>Diseño de Cejas y Pestañas</h3>
+        <p>Realza tu mirada con diseño personalizado y técnicas de lifting.</p>
+      </div>
+      <div class="card">
+        <!-- 📌 Imagen tratamientos faciales -->
+        <img src="img/faciales.jpg" alt="Tratamientos Faciales">
+        <h3>Tratamientos Faciales</h3>
+        <p>Hidratación, limpieza y rejuvenecimiento con productos premium.</p>
+      </div>
+      <div class="card">
+        <!-- 📌 Imagen tratamientos corporales -->
+        <img src="img/corporales.jpg" alt="Tratamientos Corporales">
+        <h3>Tratamientos Corporales</h3>
+        <p>Relajación y cuidado corporal para armonizar cuerpo y mente.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de reservas -->
+  <section class="reservas" id="reservas">
+    <h2>Reserva tu Cita</h2>
+    <form id="formReserva">
+      <input type="text" placeholder="Nombre completo" required>
+      <input type="email" placeholder="Correo electrónico" required>
+      <input type="tel" placeholder="Teléfono" required>
+      <select required>
+        <option value="">Selecciona un servicio</option>
+        <option value="Micropigmentación Facial">Micropigmentación Facial</option>
+        <option value="Plasma Rico en Plaquetas">Plasma Rico en Plaquetas</option>
+        <option value="Depilación Láser">Depilación Láser</option>
+        <option value="Diseño de Cejas y Pestañas">Diseño de Cejas y Pestañas</option>
+        <option value="Tratamientos Faciales">Tratamientos Faciales</option>
+        <option value="Tratamientos Corporales">Tratamientos Corporales</option>
+      </select>
+      <!-- 📌 Aquí se integrará el calendario -->
+      <input type="date" required>
+      <input type="time" required>
+      <button type="submit" class="btn">Reservar</button>
+    </form>
+  </section>
+
+  <!-- Contacto -->
+  <section class="contacto" id="contacto">
+    <h2>Contáctanos</h2>
+    <p>Email: contacto@segith.com</p>
+    <p>Teléfono: +57 300 123 4567</p>
+    <!-- 📌 Aquí puedes añadir un MAPA de Google Maps -->
+  </section>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>© 2025 Segith School & Spa - Todos los derechos reservados</p>
+  </footer>
 </body>
 </html>
