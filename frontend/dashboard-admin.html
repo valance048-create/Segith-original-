@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Administrador - Segith</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --negro: #000000;
+      --negro-suave: #111111;
+      --dorado: #D4AF37;
+      --dorado-oscuro: #B8860B;
+      --gris: #333;
+      --gris-claro: #888;
+      --blanco: #fff;
+      --verde: #4CAF50;
+      --rojo: #f44336;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    
+    body {
+      background: var(--negro-suave);
+      color: var(--blanco);
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: var(--negro);
+      padding: 20px 0;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    
+    .sidebar-header {
+      padding: 0 20px 20px;
+      border-bottom: 1px solid var(--gris);
+      margin-bottom: 15px;
+    }
+    
+    .sidebar h2 {
+      color: var(--dorado);
+      text-align: center;
+    }
+    
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      color: var(--gris-claro);
+      text-decoration: none;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    
+    .nav-item:hover, .nav-item.active {
+      background: var(--dorado);
+      color: var(--negro);
+    }
+    
+    .nav-item i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+    
+    /* Main Content */
+    .main {
+      margin-left: 250px;
+      padding: 20px;
+      flex: 1;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--gris);
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background: var(--negro);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      border-left: 4px solid var(--dorado);
+    }
+    
+    .stat-card h3 {
+      font-size: 14px;
+      color: var(--gris-claro);
+      margin-bottom: 10px;
+    }
+    
+    .stat-card .number {
+      font-size: 28px;
+      font-weight: bold;
+      color: var(--dorado);
+    }
+    
+    /* Sections */
+    .section {
+      display: none;
+      background: var(--negro);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .section.active {
+      display: block;
+      animation: fadeIn 0.5s;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      background: var(--negro-suave);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--gris);
+    }
+    
+    th {
+      background: var(--negro);
+      color: var(--dorado);
+      font-weight: 600;
+    }
+    
+    tr:hover {
+      background: rgba(212, 175, 55, 0.05);
+    }
+    
+    /* Forms */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--gris-claro);
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--gris);
+      border-radius: 6px;
+      background: var(--negro-suave);
+      color: var(--blanco);
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--dorado);
+    }
+    
+    /* Buttons */
+    .btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    
+    .btn-primary {
+      background: var(--dorado);
+      color: var(--negro);
+    }
+    
+    .btn-primary:hover {
+      background: var(--dorado-oscuro);
+    }
+    
+    .btn-danger {
+      background: var(--rojo);
+      color: var(--blanco);
+    }
+    
+    .btn-success {
+      background: var(--verde);
+      color: var(--blanco);
+    }
+    
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 5px;
+    }
+    
+    /* Search */
+    .search-box {
+      display: flex;
+      margin-bottom: 20px;
+    }
+    
+    .search-box input {
+      flex: 1;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    
+    .search-box button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    
+    /* Tabs */
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--gris);
+    }
+    
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      color: var(--gris-claro);
+    }
+    
+    .tab.active {
+      color: var(--dorado);
+      border-bottom: 2px solid var(--dorado);
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>SEGITH ADMIN</h2>
+    </div>
+    
+    <div class="nav-item active" data-section="dashboard">
+      <i class="fas fa-tachometer-alt"></i> Dashboard
+    </div>
+    
+    <div class="nav-item" data-section="estudiantes">
+      <i class="fas fa-user-graduate"></i> Estudiantes
+    </div>
+    
+    <div class="nav-item" data-section="maestros">
+      <i class="fas fa-chalkboard-teacher"></i> Maestros
+    </div>
+    
+    <div class="nav-item" data-section="cursos">
+      <i class="fas fa-book"></i> Cursos
+    </div>
+    
+    <div class="nav-item" data-section="calificaciones">
+      <i class="fas fa-chart-bar"></i> Calificaciones
+    </div>
+    
+    <div class="nav-item" data-section="asistencias">
+      <i class="fas fa-calendar-check"></i> Asistencias
+    </div>
+    
+    <div class="nav-item" data-section="configuracion">
+      <i class="fas fa-cog"></i> Configuración
+    </div>
+    
+    <div class="nav-item" id="logoutBtn">
+      <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <!-- Header -->
+    <div class="header">
+      <h1>Panel de Administración</h1>
+      <div>Bienvenido, <strong id="adminName">Administrador</strong></div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="section active">
+      <h2>Resumen General</h2>
+      
+      <div class="stats">
+        <div class="stat-card">
+          <h3>Total Estudiantes</h3>
+          <div class="number">142</div>
+        </div>
+        
+        <div class="stat-card">
+          <h3>Total Maestros</h3>
+          <div class="number">12</div>
+        </div>
+        
+        <div class="stat-card">
+          <h3>Cursos Activos</h3>
+          <div class="number">8</div>
+        </div>
+        
+        <div class="stat-card">
+          <h3>Ingresos Mensuales</h3>
+          <div class="number">$24,580</div>
+        </div>
+      </div>
+      
+      <div class="section-header">
+        <h2>Actividad Reciente</h2>
+      </div>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Acción</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>María López</td>
+            <td>Nueva estudiante registrada</td>
+            <td>20/05/2023 10:30</td>
+          </tr>
+          <tr>
+            <td>Prof. García</td>
+            <td>Subió nuevo material de estudio</td>
+            <td>19/05/2023 15:45</td>
+          </tr>
+          <tr>
+            <td>Ana Martínez</td>
+            <td>Completó el curso de Colorimetría</td>
+            <td>18/05/2023 09:15</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Estudiantes Section -->
+    <section id="estudiantes" class="section">
+      <div class="section-header">
+        <h2>Gestión de Estudiantes</h2>
+        <button class="btn btn-primary" id="addStudentBtn">
+          <i class="fas fa-plus"></i> Nuevo Estudiante
+        </button>
+      </div>
+      
+      <div class="search-box">
+        <input type="text" placeholder="Buscar estudiante...">
+        <button class="btn btn-primary">Buscar</button>
+      </div>
+      
+      <div class="tabs">
+        <div class="tab active">Todos</div>
+        <div class="tab">Activos</div>
+        <div class="tab">Inactivos</div>
+      </div>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Curso</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>EST-2023-001</td>
+            <td>Ana García López</td>
+            <td>ana.garcia@email.com</td>
+            <td>+34 612 345 678</td>
+            <td>Estética Facial</td>
+            <td><span style="color: var(--verde)">Activo</span></td>
+            <td class="action-buttons">
+              <button class="btn btn-primary btn-sm">Editar</button>
+              <button class="btn btn-danger btn-sm">Eliminar</button>
+            </td>
+          </tr>
+          <tr>
+            <td>EST-2023-002</td>
+            <td>María Rodríguez Santos</td>
+            <td>maria.rodriguez@email.com</td>
+            <td>+34 623 456 789</td>
+            <td>Cosmetología</td>
+            <td><span style="color: var(--verde)">Activo</span></td>
+            <td class="action-buttons">
+              <button class="btn btn-primary btn-sm">Editar</button>
+              <button class="btn btn-danger btn-sm">Eliminar</button>
+            </td>
+          </tr>
+          <tr>
+            <td>EST-2023-003</td>
+            <td>Carmen Ruiz Díaz</td>
+            <td>carmen.ruiz@email.com</td>
+            <td>+34 634 567 890</td>
+            <td>Micropigmentación</td>
+            <td><span style="color: var(--rojo)">Inactivo</span></td>
+            <td class="action-buttons">
+              <button class="btn btn-primary btn-sm">Editar</button>
+              <button class="btn btn-danger btn-sm">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Maestros Section -->
+    <section id="maestros" class="section">
+      <div class="section-header">
+        <h2>Gestión de Maestros</h2>
+        <button class="btn btn-primary">
+          <i class="fas fa-plus"></i> Nuevo Maestro
+        </button>
+      </div>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Especialidad</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PROF-001</td>
+            <td>Laura Martínez Gómez</td>
+            <td>laura.martinez@segith.com</td>
+            <td>Estética Facial</td>
+            <td><span style="color: var(--verde)">Activo</span></td>
+            <td class="action-buttons">
+              <button class="btn btn-primary btn-sm">Editar</button>
+              <button class="btn btn-danger btn-sm">Eliminar</button>
+            </td>
+          </tr>
+          <tr>
+            <td>PROF-002</td>
+            <td>Carlos Rodríguez López</td>
+            <td>carlos.rodriguez@segith.com</td>
+            <td>Cosmetología</td>
+            <td><span style="color: var(--verde)">Activo</span></td>
+            <td class="action-buttons">
+              <button class="btn btn-primary btn-sm">Editar</button>
+              <button class="btn btn-danger btn-sm">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Otras secciones (Cursos, Calificaciones, etc.) -->
+    <section id="cursos" class="section">
+      <h2>Gestión de Cursos</h2>
+      <!-- Contenido de cursos -->
+    </section>
+
+    <section id="calificaciones" class="section">
+      <h2>Gestión de Calificaciones</h2>
+      <!-- Contenido de calificaciones -->
+    </section>
+
+    <section id="asistencias" class="section">
+      <h2>Control de Asistencias</h2>
+      <!-- Contenido de asistencias -->
+    </section>
+
+    <section id="configuracion" class="section">
+      <h2>Configuración del Sistema</h2>
+      <!-- Contenido de configuración -->
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verificar si el administrador ha iniciado sesión
+      const isAdminLoggedIn = sessionStorage.getItem('adminLoggedIn');
+      const adminName = sessionStorage.getItem('adminName');
+      
+      if (!isAdminLoggedIn) {
+        alert('Debe iniciar sesión como administrador');
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      // Mostrar nombre del administrador
+      if (adminName) {
+        document.getElementById('adminName').textContent = adminName;
+      }
+      
+      // Navegación entre secciones
+      const navItems = document.querySelectorAll('.nav-item[data-section]');
+      const sections = document.querySelectorAll('.section');
+      
+      navItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const sectionId = this.getAttribute('data-section');
+          
+          // Actualizar navegación
+          navItems.forEach(nav => nav.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Mostrar sección correspondiente
+          sections.forEach(section => section.classList.remove('active'));
+          document.getElementById(sectionId).classList.add('active');
+        });
+      });
+      
+      // Cerrar sesión
+      document.getElementById('logoutBtn').addEventListener('click', function() {
+        sessionStorage.removeItem('adminLoggedIn');
+        sessionStorage.removeItem('adminName');
+        window.location.href = 'login.html';
+      });
+      
+      // Simular datos de estudiantes (en una app real, esto vendría de una API)
+      const loadStudentData = () => {
+        console.log('Cargando datos de estudiantes...');
+        // Aquí iría la lógica para cargar datos reales
+      };
+      
+      // Simular datos de maestros
+      const loadTeacherData = () => {
+        console.log('Cargando datos de maestros...');
+        // Aquí iría la lógica para cargar datos reales
+      };
+      
+      // Cargar datos cuando se muestre la sección
+      document.getElementById('estudiantes').addEventListener('click', loadStudentData);
+      document.getElementById('maestros').addEventListener('click', loadTeacherData);
+      
+      // Botón para agregar estudiante
+      document.getElementById('addStudentBtn').addEventListener('click', function() {
+        alert('Funcionalidad para agregar nuevo estudiante');
+        // Aquí iría un modal o formulario para agregar estudiantes
+      });
+    });
+  </script>
+</body>
+</html>
