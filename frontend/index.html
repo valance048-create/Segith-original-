@@ -5,6 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Segith School & Spa</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Estilos para mensajes y estado de usuario */
+    #user-status {
+      display: flex;
+      align-items: center;
+      margin-left: 15px;
+    }
+    #user-welcome {
+      color: #fff;
+      margin-right: 10px;
+    }
+    #message-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      max-width: 300px;
+    }
+    .message {
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .message.info {
+      background-color: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+  </style>
 </head>
 <body>
   <!-- Encabezado -->
@@ -12,98 +52,205 @@
     <div class="logo">SEGITH</div>
     <nav>
       <a href="index.html">Inicio</a>
-      <a href="login.html">Ingresar</a>
+      <a href="login.html" id="login-link">Ingresar</a>
       <a href="#servicios">Servicios</a>
       <a href="#reservas">Reservar</a>
       <a href="#contacto">Contacto</a>
+      <span id="user-status" style="display: none;">
+        <span id="user-welcome"></span>
+        <a href="#" id="logout-link">Cerrar Sesión</a>
+      </span>
     </nav>
   </header>
 
+  <!-- Mensajes de estado -->
+  <div id="message-container"></div>
+
   <!-- Hero principal -->
   <section class="hero">
-    <!-- 📌 Aquí va una IMAGEN DE FONDO (spa elegante o estética) -->
     <h1>School & Spa Segith</h1>
     <p>Descubre la experiencia del lujo en belleza y bienestar</p>
     <a href="#reservas" class="btn">Reservar Cita</a>
   </section>
 
-  <!-- Catálogo de servicios -->
-  <section class="servicios" id="servicios">
-    <h2>Nuestros Servicios</h2>
-    <div class="grid-servicios">
-      <div class="card">
-        <!-- 📌 Imagen para micropigmentación facial -->
-        <img src="img/micropigmentacion.jpg" alt="Micropigmentación Facial">
-        <h3>Micropigmentación Facial</h3>
-        <p>Resalta tu belleza natural con técnicas avanzadas en cejas y labios.</p>
-      </div>
-      <div class="card">
-        <!-- 📌 Imagen plasma rico en plaquetas -->
-        <img src="img/plasma.jpg" alt="Plasma Rico en Plaquetas">
-        <h3>Plasma Rico en Plaquetas</h3>
-        <p>Rejuvenecimiento facial y capilar con terapias de vanguardia.</p>
-      </div>
-      <div class="card">
-        <!-- 📌 Imagen depilación láser -->
-        <img src="img/laser.jpg" alt="Depilación Láser">
-        <h3>Depilación Láser</h3>
-        <p>Resultados duraderos y piel suave con tecnología láser de última generación.</p>
-      </div>
-      <div class="card">
-        <!-- 📌 Imagen diseño de cejas y pestañas -->
-        <img src="img/cejas.jpg" alt="Diseño de Cejas y Pestañas">
-        <h3>Diseño de Cejas y Pestañas</h3>
-        <p>Realza tu mirada con diseño personalizado y técnicas de lifting.</p>
-      </div>
-      <div class="card">
-        <!-- 📌 Imagen tratamientos faciales -->
-        <img src="img/faciales.jpg" alt="Tratamientos Faciales">
-        <h3>Tratamientos Faciales</h3>
-        <p>Hidratación, limpieza y rejuvenecimiento con productos premium.</p>
-      </div>
-      <div class="card">
-        <!-- 📌 Imagen tratamientos corporales -->
-        <img src="img/corporales.jpg" alt="Tratamientos Corporales">
-        <h3>Tratamientos Corporales</h3>
-        <p>Relajación y cuidado corporal para armonizar cuerpo y mente.</p>
-      </div>
-    </div>
-  </section>
+  <!-- Resto de tu contenido... -->
 
-  <!-- Sección de reservas -->
-  <section class="reservas" id="reservas">
-    <h2>Reserva tu Cita</h2>
-    <form id="formReserva">
-      <input type="text" placeholder="Nombre completo" required>
-      <input type="email" placeholder="Correo electrónico" required>
-      <input type="tel" placeholder="Teléfono" required>
-      <select required>
-        <option value="">Selecciona un servicio</option>
-        <option value="Micropigmentación Facial">Micropigmentación Facial</option>
-        <option value="Plasma Rico en Plaquetas">Plasma Rico en Plaquetas</option>
-        <option value="Depilación Láser">Depilación Láser</option>
-        <option value="Diseño de Cejas y Pestañas">Diseño de Cejas y Pestañas</option>
-        <option value="Tratamientos Faciales">Tratamientos Faciales</option>
-        <option value="Tratamientos Corporales">Tratamientos Corporales</option>
-      </select>
-      <!-- 📌 Aquí se integrará el calendario -->
-      <input type="date" required>
-      <input type="time" required>
-      <button type="submit" class="btn">Reservar</button>
-    </form>
-  </section>
-
-  <!-- Contacto -->
-  <section class="contacto" id="contacto">
-    <h2>Contáctanos</h2>
-    <p>Email: contacto@segith.com</p>
-    <p>Teléfono: +57 300 123 4567</p>
-    <!-- 📌 Aquí puedes añadir un MAPA de Google Maps -->
-  </section>
-
-  <!-- Pie de página -->
-  <footer>
-    <p>© 2025 Segith School & Spa - Todos los derechos reservados</p>
-  </footer>
+  <!-- Scripts para la conexión con el backend -->
+  <script>
+    // Configuración de la API
+    const API_BASE_URL = 'https://segith-backend.onrender.com';
+    
+    // Mostrar mensajes en la interfaz
+    function showMessage(message, type = 'info') {
+      const messageContainer = document.getElementById('message-container');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${type}`;
+      messageDiv.textContent = message;
+      messageContainer.appendChild(messageDiv);
+      
+      // Eliminar después de 5 segundos
+      setTimeout(() => {
+        messageDiv.remove();
+      }, 5000);
+    }
+    
+    // Función mejorada para crear usuario
+    async function crearUsuario(userData) {
+      try {
+        const res = await fetch(`${API_BASE_URL}/users`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+          },
+          body: JSON.stringify(userData)
+        });
+        
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          throw new Error(errorData.message || `Error ${res.status}: ${res.statusText}`);
+        }
+        
+        const data = await res.json();
+        console.log('Usuario creado:', data);
+        showMessage('Usuario creado exitosamente', 'success');
+        return data;
+      } catch (error) {
+        console.error('Error creando usuario:', error);
+        showMessage(`Error: ${error.message}`, 'error');
+        throw error;
+      }
+    }
+    
+    // Función para hacer reservas
+    async function crearReserva(reservaData) {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('Debes iniciar sesión para hacer una reserva');
+        }
+        
+        const res = await fetch(`${API_BASE_URL}/reservas`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(reservaData)
+        });
+        
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          throw new Error(errorData.message || `Error ${res.status}: ${res.statusText}`);
+        }
+        
+        const data = await res.json();
+        console.log('Reserva creada:', data);
+        showMessage('Reserva creada exitosamente', 'success');
+        return data;
+      } catch (error) {
+        console.error('Error creando reserva:', error);
+        showMessage(`Error: ${error.message}`, 'error');
+        throw error;
+      }
+    }
+    
+    // Función para login
+    async function login(credentials) {
+      try {
+        const res = await fetch(`${API_BASE_URL}/auth/login`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(credentials)
+        });
+        
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          throw new Error(errorData.message || `Error ${res.status}: ${res.statusText}`);
+        }
+        
+        const data = await res.json();
+        
+        // Guardar token en localStorage
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          updateUIForUser(data.user);
+          showMessage('Sesión iniciada correctamente', 'success');
+        }
+        
+        return data;
+      } catch (error) {
+        console.error('Error en login:', error);
+        showMessage(`Error: ${error.message}`, 'error');
+        throw error;
+      }
+    }
+    
+    // Actualizar UI cuando el usuario inicia sesión
+    function updateUIForUser(user) {
+      document.getElementById('login-link').style.display = 'none';
+      document.getElementById('user-status').style.display = 'flex';
+      document.getElementById('user-welcome').textContent = `Hola, ${user.nombre || user.email}`;
+    }
+    
+    // Verificar si ya hay una sesión activa al cargar la página
+    function checkAuthStatus() {
+      const token = localStorage.getItem('token');
+      const user = JSON.parse(localStorage.getItem('user') || 'null');
+      
+      if (token && user) {
+        updateUIForUser(user);
+      }
+    }
+    
+    // Manejar logout
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      document.getElementById('login-link').style.display = 'inline';
+      document.getElementById('user-status').style.display = 'none';
+      showMessage('Sesión cerrada correctamente', 'info');
+    }
+    
+    // Configurar event listeners cuando el DOM esté cargado
+    document.addEventListener('DOMContentLoaded', function() {
+      checkAuthStatus();
+      
+      // Configurar logout
+      document.getElementById('logout-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        logout();
+      });
+      
+      // Ejemplo de uso: crear un usuario (podría llamarse desde un formulario)
+      // crearUsuario({ email: 'test@test.com', role: 'student', nombre: 'Test User' });
+      
+      // Ejemplo de como manejar el formulario de reserva
+      const formReserva = document.getElementById('formReserva');
+      if (formReserva) {
+        formReserva.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          
+          // Obtener datos del formulario
+          const reservaData = {
+            servicio: document.getElementById('servicio').value,
+            fecha: document.getElementById('fecha').value,
+            hora: document.getElementById('hora').value,
+            // ...otros campos
+          };
+          
+          try {
+            await crearReserva(reservaData);
+            formReserva.reset();
+          } catch (error) {
+            // Error ya manejado en crearReserva
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>
