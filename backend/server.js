@@ -25,8 +25,17 @@ app.get('/', (req, res) => res.send('API de Segith funcionando 🚀'));
 app.post('/users', async (req, res) => {
   const user = new User(req.body);
   await user.save();
-  res.json(user);
-});
-
+  res.json(import express from 'express';
+}));
+const app = express();
+// Permitir requests desde GitHub Pages / dominio
+app.use(cors({
+  origin: [
+    'https://tuusuario.github.io',    // si publicas así
+    'https://segith.com'              // si usas dominio propio (ajusta)
+  ],
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization']
+}));
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor en puerto ${PORT}`));
