@@ -1,24 +1,20 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import dotenv from 'dotenv';
-
-// 1. Cargar variables de entorno PRIMERO
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 2. VERIFICACIÓN CRÍTICA de variables de entorno
+// VERIFICACIÓN CRÍTICA de variables de entorno
 console.log('🔍 Verificando variables de entorno...');
 if (!process.env.MONGO_URI) {
   console.error('❌ ERROR CRÍTICO: MONGO_URI no está definida');
-  console.log('💡 Solución: Configura esta variable en Render -> Environment Groups');
+  console.log('💡 Solución: Configura esta variable en Render -> Environment');
   console.log('💡 Nombre variable: MONGO_URI');
   console.log('💡 Valor: mongodb+srv://usuario:password@cluster...');
   process.exit(1);
 }
-console.log('✅ Variables de entorno verificadas');
+console.log('✅ Variable MONGO_URI encontrada en variables de entorno');
 
 // Middleware
 app.use(express.json());
@@ -38,7 +34,6 @@ app.use(cors({
 const uri = process.env.MONGO_URI;
 
 console.log('🔗 Intentando conectar a MongoDB...');
-console.log('📝 URI de MongoDB:', process.env.MONGO_URI ? 'Presente (oculta por seguridad)' : 'NO DEFINIDA');
 
 mongoose.connect(uri, {
   useNewUrlParser: true,
@@ -155,10 +150,4 @@ app.listen(PORT, () => {
   console.log(`🌐 Entorno: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🔗 Health check: http://localhost:${PORT}/health`);
   console.log(`📊 Estado BD: ${db.readyState === 1 ? 'Conectado' : 'Desconectado'}`);
-  
-  // Verificación final
-  if (!process.env.MONGO_URI) {
-    console.log('\n❌ ADVERTENCIA: MONGO_URI no está definida');
-    console.log('💡 El servidor iniciará pero no podrá conectarse a MongoDB');
-  }
 });
