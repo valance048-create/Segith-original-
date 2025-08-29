@@ -1,0 +1,9 @@
+{
+  "name": "segith-backend",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^7.6.0",
+    "cors": "^2.8.5"
+  }
+}
