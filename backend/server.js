@@ -5,6 +5,18 @@ import cors from 'cors';
 const app = express();
 app.use(express.json());
 
+// AÑADE ESTO AL INICIO de tu server.js (después de los imports)
+console.log('🔍 Verificando variables de entorno...');
+console.log('PORT:', process.env.PORT);
+console.log('MONGO_URI:', process.env.MONGO_URI ? 'PRESENTE' : 'UNDEFINED ❌');
+
+// VERIFICACIÓN CRÍTICA - Añade esto antes de mongoose.connect()
+if (!process.env.MONGO_URI) {
+  console.error('❌ ERROR: MONGO_URI no está definida en variables de entorno');
+  console.log('💡 Solución: Configurar MONGO_URI en Render -> Environment');
+  process.exit(1); // Detiene la aplicación si no hay MONGO_URI
+}
+
 // Permitir requests desde GitHub Pages / dominio
 app.use(cors({
   origin: [
