@@ -20,9 +20,11 @@ if (!process.env.MONGO_URI) {
 // Permitir requests desde GitHub Pages / dominio
 app.use(cors({
   origin: [
-    'https://tuusuario.github.io', // si publicas así
-    'https://segith.com'           // si usas dominio propio (ajusta)
+    'https://valance048-create.github.io', // ← TU usuario real de GitHub
+    'http://localhost:8000',               // ← Para desarrollo local
+    'http://localhost:3000'                // ← Para desarrollo local
   ],
+  credentials: true,
   methods: ['GET','POST','PUT','DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type','Authorization']
 }));
